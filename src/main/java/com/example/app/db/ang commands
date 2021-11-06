@@ -1,0 +1,2 @@
+ng serve
+ng g component components/position

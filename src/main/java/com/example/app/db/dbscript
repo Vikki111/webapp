@@ -1,0 +1,55 @@
+drop table employee_operation, employee, position, type_operation, department;
+
+Create table employee
+	(
+	reg_number SERIAL PRIMARY KEY,
+	last_name varchar(30),
+	first_name varchar(30),
+	patronymic varchar(30),
+	birthday varchar(30),
+	gender varchar(30),
+	job_number integer,
+	home_number integer,
+	union_membership varchar(30),
+	street varchar(30),
+	house varchar(30),
+	apartment varchar(30)
+	);
+
+Create table position
+    (
+    position_id SERIAL PRIMARY KEY,
+    position_name varchar(30)
+    );
+
+Create table type_operation
+    (
+    type_operation_id SERIAL PRIMARY KEY,
+    type_operation_name varchar(30)
+    );
+
+Create table department
+    (
+    department_id SERIAL PRIMARY KEY,
+    department_name varchar(30)
+    );
+
+Create table employee_operation
+    (
+    order_number SERIAL PRIMARY KEY,
+    date_operation varchar(30),
+    reg_number integer,
+    position_id integer,
+    type_operation_id integer,
+    department_id integer
+    );
+
+
+INSERT INTO position (position_id, position_name) VALUES (1, 'developer');
+INSERT INTO type_operation (type_operation_id, type_operation_name) VALUES (1, 'hired');
+INSERT INTO department (department_id, department_name) VALUES (1, 'dev');
+INSERT INTO employee (reg_number, last_name, first_name, patronymic, birthday, gender, job_number, home_number,
+union_membership, street, house, apartment) VALUES (1, 'Petrov', 'Peter', 'Petrovich', 'test', 'male',
+123, 132, true, 'Baker', '221', 'b');
+INSERT INTO employee_operation (order_number, date_operation, reg_number, position_id, type_operation_id, department_id)
+VALUES (1, 'test', 1, 1, 1, 1);
