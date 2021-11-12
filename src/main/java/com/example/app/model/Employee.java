@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "employee")
@@ -21,7 +23,7 @@ public class Employee {
     @Column(name = "patronymic")
     private String patronymic;
     @Column(name = "birthday")
-    private String birthday;
+    private Date birthday;
     @Column(name = "gender")
     private String gender;
     @Column(name = "job_number")

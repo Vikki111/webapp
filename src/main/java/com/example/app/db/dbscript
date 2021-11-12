@@ -6,7 +6,7 @@ Create table employee
 	last_name varchar(30),
 	first_name varchar(30),
 	patronymic varchar(30),
-	birthday varchar(30),
+	birthday date,
 	gender varchar(30),
 	job_number integer,
 	home_number integer,
@@ -19,37 +19,58 @@ Create table employee
 Create table position
     (
     position_id SERIAL PRIMARY KEY,
-    position_name varchar(30)
+    position_name varchar(30) UNIQUE
     );
 
 Create table type_operation
     (
     type_operation_id SERIAL PRIMARY KEY,
-    type_operation_name varchar(30)
+    type_operation_name varchar(30) UNIQUE
     );
 
 Create table department
     (
     department_id SERIAL PRIMARY KEY,
-    department_name varchar(30)
+    department_name varchar(30) UNIQUE
     );
 
 Create table employee_operation
     (
     order_number SERIAL PRIMARY KEY,
-    date_operation varchar(30),
+    date_operation date,
     reg_number integer,
-    position_id integer,
+    position_id integer ,
     type_operation_id integer,
-    department_id integer
+    department_id integer,
+    FOREIGN KEY (reg_number) REFERENCES employee (reg_number) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (position_id) REFERENCES position (position_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (type_operation_id) REFERENCES type_operation (type_operation_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (department_id) REFERENCES department (department_id) ON DELETE RESTRICT ON UPDATE CASCADE
     );
+
 
 
 INSERT INTO position (position_id, position_name) VALUES (1, 'developer');
 INSERT INTO type_operation (type_operation_id, type_operation_name) VALUES (1, 'hired');
 INSERT INTO department (department_id, department_name) VALUES (1, 'dev');
 INSERT INTO employee (reg_number, last_name, first_name, patronymic, birthday, gender, job_number, home_number,
-union_membership, street, house, apartment) VALUES (1, 'Petrov', 'Peter', 'Petrovich', 'test', 'male',
+union_membership, street, house, apartment) VALUES (1, 'Petrov', 'Peter', 'Petrovich', '1999-08-01', 'male',
 123, 132, true, 'Baker', '221', 'b');
 INSERT INTO employee_operation (order_number, date_operation, reg_number, position_id, type_operation_id, department_id)
-VALUES (1, 'test', 1, 1, 1, 1);
+VALUES (1, '1998-07-04', 1, 1, 1, 1);
+
+
+
+    SELECT
+      eo.order_number as orderNumber,
+      eo.date_operation as dateOperation,
+      eo.reg_number as regNumber,
+      eo.position_id as positionId,
+      eo.department_id as departmentId,
+      d.department_name as departmentName
+    FROM
+      employee_operation as eo
+      INNER JOIN department as d
+        ON eo.department_id = d.department_id
+    WHERE
+      order_number = 1
