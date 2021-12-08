@@ -1,6 +1,5 @@
 package com.example.app.service;
 
-import com.example.app.model.Department;
 import com.example.app.model.EmployeeOperation;
 
 import java.util.List;

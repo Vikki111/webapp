@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class EmployeeOperationController {
     }
 
     @PostMapping(value = "/employeeOperations")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody EmployeeOperation employeeOperation) {
         log.debug("employeeOperationBody '{}'", employeeOperation);
         employeeOperationService.create(employeeOperation);
@@ -31,6 +33,7 @@ public class EmployeeOperationController {
     }
 
     @GetMapping(value = "/employeeOperations")
+    @PreAuthorize("hasRole('ROLE')")
     public ResponseEntity<List<EmployeeOperation>> getAll() {
         final List<EmployeeOperation> employeeOperations = employeeOperationService.getAll();
         log.info("get entity");
@@ -38,6 +41,7 @@ public class EmployeeOperationController {
     }
 
     @GetMapping(value = "/employeeOperations/{id}")
+    @PreAuthorize("hasRole('ROLE')")
     public ResponseEntity<EmployeeOperation> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final EmployeeOperation employeeOperation = employeeOperationService.get(id);
@@ -46,6 +50,7 @@ public class EmployeeOperationController {
     }
 
     @PutMapping(value = "/employeeOperations/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id,
                                     @RequestBody EmployeeOperation employeeOperation) {
         log.debug("employeeOperationBody '{}'", employeeOperation);
@@ -54,6 +59,7 @@ public class EmployeeOperationController {
     }
 
     @DeleteMapping(value = "/employeeOperations/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         employeeOperationService.delete(id);
         log.debug("id '{}'", id);

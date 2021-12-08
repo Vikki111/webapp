@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class TypeOperationController {
     }
 
     @PostMapping(value = "/typeOperations")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody TypeOperation typeOperation) {
         log.debug("typeOperationBody '{}'", typeOperation);
         typeOperationService.create(typeOperation);
@@ -31,6 +33,7 @@ public class TypeOperationController {
     }
 
     @GetMapping(value = "/typeOperations")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<TypeOperation>> getAll() {
         final List<TypeOperation> typeOperations = typeOperationService.getAll();
         log.info("get entity");
@@ -38,6 +41,7 @@ public class TypeOperationController {
     }
 
     @GetMapping(value = "/typeOperations/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<TypeOperation> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final TypeOperation typeOperation = typeOperationService.get(id);
@@ -46,6 +50,7 @@ public class TypeOperationController {
     }
 
     @PutMapping(value = "/typeOperations/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id,
                                     @RequestBody TypeOperation typeOperation) {
         log.debug("typeOperationBody '{}'", typeOperation);
@@ -54,6 +59,7 @@ public class TypeOperationController {
     }
 
     @DeleteMapping(value = "/typeOperations/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         typeOperationService.delete(id);
         log.debug("id '{}'", id);

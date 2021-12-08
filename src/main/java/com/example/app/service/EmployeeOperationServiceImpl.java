@@ -4,6 +4,8 @@ import com.example.app.model.EmployeeOperation;
 import com.example.app.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -62,7 +64,13 @@ public class EmployeeOperationServiceImpl implements EmployeeOperationService {
     @Override
     public List<EmployeeOperation> getAll() {
         List<EmployeeOperation> employeeOperations = employeeOperationRepository.findAll();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         for (EmployeeOperation employeeOperation: employeeOperations) {
+            try {
+                employeeOperation.setDateOperation(format.parse(employeeOperation.getDateOperation().toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             employeeOperation.setDepartmentName(departmentRepository.getById(employeeOperation.getDepartmentId()).getDepartmentName());
             employeeOperation.setTypeOperationName(typeOperationRepository.getById(employeeOperation.getTypeOperationId()).getTypeOperationName());
             employeeOperation.setPositionName(positionRepository.getById(employeeOperation.getPositionId()).getPositionName());

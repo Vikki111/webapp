@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/employees")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody Employee employee) {
         log.debug("employeeBody '{}'", employee);
         employeeService.create(employee);
@@ -31,6 +33,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/employees")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Employee>> getAll() {
         final List<Employee> employees = employeeService.getAll();
         log.info("get entity");
@@ -38,6 +41,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/employees/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Employee> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final Employee employee = employeeService.get(id);
@@ -46,6 +50,7 @@ public class EmployeeController {
     }
 
     @PutMapping(value = "/employees/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id,
                                     @RequestBody Employee employee) {
         log.debug("employeeBody '{}'", employee);
@@ -54,6 +59,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping(value = "/employees/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         employeeService.delete(id);
         log.debug("id '{}'", id);

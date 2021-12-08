@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class PositionController {
     }
 
     @PostMapping(value = "/positions")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody Position position) {
         log.debug("positionBody '{}'", position);
         positionService.create(position);
@@ -31,6 +33,7 @@ public class PositionController {
     }
 
     @GetMapping(value = "/positions")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Position>> getAll() {
         final List<Position> positions = positionService.getAll();
         log.info("get entity");
@@ -38,6 +41,7 @@ public class PositionController {
     }
 
     @GetMapping(value = "/positions/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Position> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final Position position = positionService.get(id);
@@ -46,6 +50,7 @@ public class PositionController {
     }
 
     @PutMapping(value = "/positions/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@PathVariable(name = "id") int id,
                                     @RequestBody Position position) {
         log.debug("positionBody '{}'", position);
@@ -54,6 +59,7 @@ public class PositionController {
     }
 
     @DeleteMapping(value = "/positions/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
         positionService.delete(id);
         log.debug("id '{}'", id);

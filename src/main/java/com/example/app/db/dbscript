@@ -74,3 +74,27 @@ VALUES (1, '1998-07-04', 1, 1, 1, 1);
         ON eo.department_id = d.department_id
     WHERE
       order_number = 1
+
+Create table users
+    (
+    id bigint,
+    password varchar(30),
+    username varchar(30)
+    );
+
+
+Create table roles
+    (
+    id integer,
+    name varchar(30)
+    );
+
+
+Create table user_roles
+    (
+    user_id bigint,
+    role_id integer
+    );
+
+    INSERT INTO roles(name) VALUES('ROLE_USER');
+    INSERT INTO roles(name) VALUES('ROLE_ADMIN');
