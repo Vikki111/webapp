@@ -66,11 +66,11 @@ public class EmployeeOperationServiceImpl implements EmployeeOperationService {
         List<EmployeeOperation> employeeOperations = employeeOperationRepository.findAll();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         for (EmployeeOperation employeeOperation: employeeOperations) {
-            try {
-                employeeOperation.setDateOperation(format.parse(employeeOperation.getDateOperation().toString()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                employeeOperation.setDateOperation(format.parse(employeeOperation.getDateOperation().toString()));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
             employeeOperation.setDepartmentName(departmentRepository.getById(employeeOperation.getDepartmentId()).getDepartmentName());
             employeeOperation.setTypeOperationName(typeOperationRepository.getById(employeeOperation.getTypeOperationId()).getTypeOperationName());
             employeeOperation.setPositionName(positionRepository.getById(employeeOperation.getPositionId()).getPositionName());

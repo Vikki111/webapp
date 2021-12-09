@@ -33,7 +33,7 @@ public class PositionController {
     }
 
     @GetMapping(value = "/positions")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<Position>> getAll() {
         final List<Position> positions = positionService.getAll();
         log.info("get entity");
@@ -41,7 +41,7 @@ public class PositionController {
     }
 
     @GetMapping(value = "/positions/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Position> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final Position position = positionService.get(id);

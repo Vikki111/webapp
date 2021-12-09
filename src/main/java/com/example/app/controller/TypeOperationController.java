@@ -33,7 +33,7 @@ public class TypeOperationController {
     }
 
     @GetMapping(value = "/typeOperations")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<TypeOperation>> getAll() {
         final List<TypeOperation> typeOperations = typeOperationService.getAll();
         log.info("get entity");
@@ -41,7 +41,7 @@ public class TypeOperationController {
     }
 
     @GetMapping(value = "/typeOperations/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<TypeOperation> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final TypeOperation typeOperation = typeOperationService.get(id);

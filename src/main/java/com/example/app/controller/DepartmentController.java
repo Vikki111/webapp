@@ -34,7 +34,7 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/departments")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<Department>> getAll() {
         final List<Department> departments = departmentService.getAll();
         log.info("get entity");
@@ -42,7 +42,7 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/departments/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Department> get(@PathVariable(name = "id") int id) {
         log.debug("id '{}'", id);
         final Department department = departmentService.get(id);
